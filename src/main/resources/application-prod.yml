@@ -1,0 +1,21 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: gestiondepedidos-prod
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gestiondepedidos
+    username: postgres
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+logging:
+  level:
+    '[primerspringboot.com.gestiondepedidos]': INFO
+    '[org.springframework.web]': WARN

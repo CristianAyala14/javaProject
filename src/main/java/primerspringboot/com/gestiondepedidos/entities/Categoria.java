@@ -20,4 +20,9 @@ public class Categoria extends Base {
     @Builder.Default
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Producto> productos = new HashSet<>();
+
+    public Categoria(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
 }
