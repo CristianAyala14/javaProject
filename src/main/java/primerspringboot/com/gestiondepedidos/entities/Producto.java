@@ -19,7 +19,7 @@ public class Producto extends Base {
     private String imagen;
     private Boolean disponible;
     //relacion con categoria 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
 }

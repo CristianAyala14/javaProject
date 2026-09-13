@@ -26,8 +26,12 @@ public class Usuario extends Base {
     private Rol rol;
     
     // Un usuario tiene muchos pedidos, mapeado por el atributo 'usuario' en Pedido
-    @Builder.Default //investigar
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(
+        mappedBy = "usuario",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+    @Builder.Default
     private Set<Pedido> pedidos = new HashSet<>();
     
     

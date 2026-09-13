@@ -15,15 +15,24 @@ public class DetallePedido extends Base {
     private int cantidad;
     private Double subtotal;
 
+
+
     //relacion con producto
-    @ManyToOne
-    @JoinColumn(name = "producto_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
 
-    @Builder
-    public DetallePedido(int cantidad, Producto producto) {
+    //relacion con pedido
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pedido_id", nullable = false)
+    private Pedido pedido;
+
+
+   @Builder
+    public DetallePedido(int cantidad, Producto producto, Pedido pedido) {
         this.cantidad = cantidad;
         this.producto = producto;
+        this.pedido = pedido;
         calcularSubtotal();
     }
 

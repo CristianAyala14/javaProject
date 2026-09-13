@@ -26,14 +26,14 @@ public class Pedido extends Base implements Calculable {
     private Double total = 0.0;
     @Enumerated(EnumType.STRING)
     private FormaPago formaPago;
-            // relación con Usuario
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    // relación con Usuario
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-            //relacion con detalles
+    //relacion con detalles
     @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<DetallePedido> detalles = new HashSet<>();
 
 
@@ -58,9 +58,10 @@ public class Pedido extends Base implements Calculable {
             existente.calcularSubtotal();
         } else {
             DetallePedido nuevo = DetallePedido.builder()
-                    .cantidad(cantidad)
-                    .producto(producto)
-                    .build();
+            .cantidad(cantidad)
+            .producto(producto)
+            .pedido(this)
+            .build();
             detalles.add(nuevo);
         }
 
