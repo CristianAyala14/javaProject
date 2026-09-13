@@ -12,7 +12,7 @@ import primerspringboot.com.gestiondepedidos.repository.DetallePedidoRepository;
 import primerspringboot.com.gestiondepedidos.repository.PedidoRepository;
 import primerspringboot.com.gestiondepedidos.repository.ProductoRepository;
 
-@Service("implementacion-1")
+@Service
 public class DetallePedidoServiceImpl implements DetallePedidoService {
 
     private final DetallePedidoRepository detallePedidoRepository;
@@ -30,9 +30,7 @@ public class DetallePedidoServiceImpl implements DetallePedidoService {
     }
 
     @Override
-    public DetallePedidoRes save(
-            DetallePedidoCreateReq detalleCreateReq,
-            Long pedidoId) {
+    public DetallePedidoRes save(DetallePedidoCreateReq detalleCreateReq, Long pedidoId) {
 
         Pedido pedido = pedidoRepository.findById(pedidoId)
                 .orElseThrow(() -> new NullPointerException("Pedido no encontrado"));
@@ -40,9 +38,11 @@ public class DetallePedidoServiceImpl implements DetallePedidoService {
         Producto producto = productoRepository.findById(detalleCreateReq.productoId())
                 .orElseThrow(() -> new NullPointerException("Producto no encontrado"));
 
-        DetallePedido detalle = detalleCreateReq.toEntity(producto, pedido);
+        pedido.addDetallePedido(detalleCreateReq.cantidad(), producto);
 
-        detalle = detallePedidoRepository.save(detalle);
+        pedidoRepository.save(pedido);
+
+        DetallePedido detalle = pedido.findDetallePedidoByProducto(producto);
 
         return DetallePedidoRes.toDto(detalle);
     }
@@ -85,6 +85,13 @@ public class DetallePedidoServiceImpl implements DetallePedidoService {
 
         detalleExistente = detallePedidoRepository.save(detalleExistente);
 
+        Pedido pedido = detalleExistente.getPedido();
+
+        if (pedido != null) {
+            pedido.calcularTotal();
+            pedidoRepository.save(pedido);
+        }
+
         return DetallePedidoRes.toDto(detalleExistente);
     }
 
@@ -97,5 +104,12 @@ public class DetallePedidoServiceImpl implements DetallePedidoService {
         detalle.setEliminado(true);
 
         detallePedidoRepository.save(detalle);
+
+        Pedido pedido = detalle.getPedido();
+
+        if (pedido != null) {
+            pedido.calcularTotal();
+            pedidoRepository.save(pedido);
+        }
     }
 }

@@ -1,4 +1,5 @@
 package primerspringboot.com.gestiondepedidos.entities;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,12 +14,17 @@ import lombok.*;
 public class Producto extends Base {
 
     private String nombre;
+
     private Double precio;
+
     private String descripcion;
+
     private int stock;
+
     private String imagen;
+
     private Boolean disponible;
-    //relacion con categoria 
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;

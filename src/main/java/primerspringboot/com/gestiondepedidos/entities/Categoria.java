@@ -1,6 +1,8 @@
 package primerspringboot.com.gestiondepedidos.entities;
+
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,10 +17,17 @@ import java.util.Set;
 public class Categoria extends Base {
 
     private String nombre;
+
     private String descripcion;
 
     @Builder.Default
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(
+            mappedBy = "categoria",
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
+    )
     private Set<Producto> productos = new HashSet<>();
 
     public Categoria(String nombre, String descripcion) {

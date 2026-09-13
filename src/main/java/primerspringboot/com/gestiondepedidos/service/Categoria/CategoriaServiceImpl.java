@@ -5,7 +5,7 @@ import primerspringboot.com.gestiondepedidos.dtos.Categoria.*;
 import primerspringboot.com.gestiondepedidos.entities.Categoria;
 import primerspringboot.com.gestiondepedidos.repository.CategoriaRepository;
 
-@Service("implementacion-1")
+@Service
 public class CategoriaServiceImpl implements CategoriaService {
 
     private final CategoriaRepository categoriaRepository;

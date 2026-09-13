@@ -8,7 +8,7 @@ import primerspringboot.com.gestiondepedidos.dtos.Usuario.*;
 import primerspringboot.com.gestiondepedidos.entities.Usuario;
 import primerspringboot.com.gestiondepedidos.repository.UsuarioRepository;
 
-@Service("implementacion-1")
+@Service
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;

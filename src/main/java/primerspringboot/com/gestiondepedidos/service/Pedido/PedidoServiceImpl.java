@@ -10,7 +10,7 @@ import primerspringboot.com.gestiondepedidos.entities.Usuario;
 import primerspringboot.com.gestiondepedidos.repository.PedidoRepository;
 import primerspringboot.com.gestiondepedidos.repository.UsuarioRepository;
 
-@Service("implementacion-1")
+@Service
 public class PedidoServiceImpl implements PedidoService {
 
     private final PedidoRepository pedidoRepository;

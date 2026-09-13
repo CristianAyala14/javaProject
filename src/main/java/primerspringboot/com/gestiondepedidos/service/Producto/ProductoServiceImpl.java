@@ -10,7 +10,7 @@ import primerspringboot.com.gestiondepedidos.entities.Producto;
 import primerspringboot.com.gestiondepedidos.repository.CategoriaRepository;
 import primerspringboot.com.gestiondepedidos.repository.ProductoRepository;
 
-@Service("implementacion-1")
+@Service
 public class ProductoServiceImpl implements ProductoService {
 
     private final ProductoRepository productoRepository;

@@ -1,7 +1,7 @@
 package primerspringboot.com.gestiondepedidos.entities;
+
 import jakarta.persistence.*;
 import lombok.*;
-
 
 @Entity
 @Table(name = "detalles")
@@ -13,37 +13,39 @@ import lombok.*;
 public class DetallePedido extends Base {
 
     private int cantidad;
+
     private Double subtotal;
 
-
-
-    //relacion con producto
     @ManyToOne(optional = false)
     @JoinColumn(name = "producto_id", nullable = false)
     private Producto producto;
 
-    //relacion con pedido
     @ManyToOne(optional = false)
     @JoinColumn(name = "pedido_id", nullable = false)
     private Pedido pedido;
 
+    @Builder
+    public DetallePedido(
+            int cantidad,
+            Producto producto,
+            Pedido pedido) {
 
-   @Builder
-    public DetallePedido(int cantidad, Producto producto, Pedido pedido) {
         this.cantidad = cantidad;
         this.producto = producto;
         this.pedido = pedido;
+
         calcularSubtotal();
     }
 
     public void calcularSubtotal() {
+
         if (producto != null && producto.getPrecio() != null) {
             this.subtotal = cantidad * producto.getPrecio();
         } else {
             this.subtotal = 0.0;
         }
     }
-    //antes de guardar en jpa, se ejecuta este metodo para calcular el subtotal antes de persistir o actualizar la entidad.
+
     @PrePersist
     @PreUpdate
     public void preSave() {

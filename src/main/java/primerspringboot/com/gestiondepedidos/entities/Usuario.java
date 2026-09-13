@@ -1,10 +1,12 @@
 package primerspringboot.com.gestiondepedidos.entities;
-import primerspringboot.com.gestiondepedidos.enums.*;
-import java.util.Set;
-import java.util.HashSet;
-import lombok.*;
-import jakarta.persistence.*;
 
+import primerspringboot.com.gestiondepedidos.enums.Rol;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "usuarios")
@@ -13,27 +15,29 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = "pedidos") // Evita bucles recursivos en el toString (investigar un poco mas para entender mejor)
+@ToString(exclude = "pedidos")
 public class Usuario extends Base {
+
     private String nombre;
+
     private String apellido;
+
     private String mail;
+
     private String celular;
+
     private String contraseña;
-    
-    
-    @Enumerated(EnumType.STRING) // Guarda el string ('ADMIN', 'USUARIO') en la BD y no el numero ordinal del enum
+
+    @Enumerated(EnumType.STRING)
     private Rol rol;
-    
-    // Un usuario tiene muchos pedidos, mapeado por el atributo 'usuario' en Pedido
+
     @OneToMany(
-        mappedBy = "usuario",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
+            mappedBy = "usuario",
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            }
     )
     @Builder.Default
     private Set<Pedido> pedidos = new HashSet<>();
-    
-    
-   
 }
