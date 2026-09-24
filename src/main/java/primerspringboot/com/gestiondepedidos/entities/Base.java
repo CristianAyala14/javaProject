@@ -9,13 +9,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Base {
+public abstract class Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private Long id;
 
+    
     protected boolean eliminado = false;
 
     protected LocalDateTime createdAt;

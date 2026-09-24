@@ -3,6 +3,8 @@ package primerspringboot.com.gestiondepedidos.dtos.Usuario;
 import primerspringboot.com.gestiondepedidos.entities.Usuario;
 import primerspringboot.com.gestiondepedidos.enums.Rol;
 
+
+
 public record UsuarioRes(
         Long id,
         String nombre,
